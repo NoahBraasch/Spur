@@ -85,8 +85,11 @@ wait_loop:
   addi t3, x0, 0x0D
   beq t0, t3, parse_command  
 
-  sw t0, 0(s2)     #save input
-  addi s2, s2, 4   #increment pointer
+parse_command_return:  
+  addi t1, x0, 1 # t1 gets mangled in parse_command
+
+  sb t0, 0(s2)     #save input
+  addi s2, s2, 1   #increment pointer
   sw s2, 0x100(x0) #store pointer
   
       
@@ -99,17 +102,25 @@ wait_loop:
 parse_command:
   addi a0, x0, 0x0A #line feed
   call put_char
-
-  #Testing purposes 
-  addi a0, x0, 'T'
-  call put_char
-
   
-
 
   #begin case statement
+  lw s3, 0x200(x0) # grab command
   
+  # clr
+  addi t0, x0, 'c'
+  slli t0, t0, 8
+  addi t0, t0, 'l'
+  slli t0, t0, 8
+  addi t0, t0, 'r'
+  slli t0, t0, 8
+  addi t0, t0, 's'
   
+  beq s3, t0, clear
+
+  j default
+
+  clear:
 
   default:
     addi a0, x0, 'I' #line feed
@@ -146,7 +157,7 @@ parse_command:
    
 
   end_case:
-    j polling_loop
+    j parse_command_return
 
 put_char: #Assumes printing char is in a0
   sw a0, 4(x0)
