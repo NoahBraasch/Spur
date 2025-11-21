@@ -100,8 +100,51 @@ parse_command:
   call put_char
 
   #Testing purposes 
- addi a0, x0, 'T'
- call put_char
+  addi a0, x0, 'T'
+  call put_char
+
+  
+
+
+  #begin case statement
+  
+  
+
+  default:
+    addi a0, x0, 'I' #line feed
+    call put_char
+    
+    addi a0, x0, 'n' #line feed
+    call put_char
+
+    addi a0, x0, 'v' #line feed
+    call put_char
+
+    addi a0, x0, 'a' #line feed
+    call put_char
+    
+    addi a0, x0, 'l' #line feed
+    call put_char
+
+    addi a0, x0, 'i' #line feed
+    call put_char
+
+    addi a0, x0, 'd' #line feed
+    call put_char
+
+    addi a0, x0, 0x0D #line feed
+    call put_char
+
+    addi a0, x0, 0x0A #line feed
+    call put_char
+
+
+
+
+
+   
+
+  end_case:
 
 
 put_char: #Assumes printing char is in a0
@@ -112,6 +155,7 @@ put_char: #Assumes printing char is in a0
   ret 
 
 clear_screen:
+  
   addi a0, x0, 0x1B #Escape
   call put_char 
  
