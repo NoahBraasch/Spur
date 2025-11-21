@@ -1,12 +1,13 @@
  
-  lui sp, 0x2 # Initialize sp
+  lui sp, 0x4 # Initialize sp
 
   sw x0, 4(x0)   #initialize IO
   sw x0, 8(x0)
   addi s1, x0, 4 #Bitmask
   addi t1, x0, 1
 
-  sw x0, 0x100(x0) #Init input buffer pointer
+  addi t2, x0, 0x200
+  sw t2, 0x100(x0) #Init input buffer pointer
 
 welcome:
   
@@ -78,7 +79,7 @@ wait_loop:
   andi t2, t2, 4
   beq t2, s1, wait_loop
   
-  lw t0, 0(x0) #grab_rx
+  lb t0, 0(x0) #grab_rx
   lw s2, 0x100(x0) #Grab input buffer pointer
 
   addi t3, x0, 0x0D
