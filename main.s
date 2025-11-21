@@ -164,6 +164,16 @@ put_char: #Assumes printing char is in a0
   ori t0, x0, 1
   sw t0, 8(x0)
   sw x0, 8(x0)
+
+# testing no delay 
+  #delay a bunch
+  #addi t0, x0, 0xFF
+  #slli t0, t0, 8
+  #addi t0, t0, 0xFF  
+  
+  #subtract_loop:
+   # addi t0, t0, -1
+   # bne t0, x0, subtract_loop
   ret 
 
 clear_screen:
