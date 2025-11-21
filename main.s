@@ -1,5 +1,5 @@
  
-  lui sp, 0x1000 # Initialize sp
+  lui sp, 0x2 # Initialize sp
 
   sw x0, 4(x0)   #initialize IO
   sw x0, 8(x0)
@@ -81,11 +81,11 @@ wait_loop:
   lw t0, 0(x0) #grab_rx
   lw s2, 0x100(x0) #Grab input buffer pointer
 
-  addi t3, x0 0x0D
+  addi t3, x0, 0x0D
   beq t0, t3, parse_command  
 
   sw t0, 0(s2)     #save input
-  addi s2, x0, 4   #increment pointer
+  addi s2, s2, 4   #increment pointer
   sw s2, 0x100(x0) #store pointer
   
       
@@ -145,7 +145,7 @@ parse_command:
    
 
   end_case:
-
+    j polling_loop
 
 put_char: #Assumes printing char is in a0
   sw a0, 4(x0)
@@ -155,12 +155,19 @@ put_char: #Assumes printing char is in a0
   ret 
 
 clear_screen:
+ 
+  addi sp, sp, -4
+  sw ra, 0(sp)
   
   addi a0, x0, 0x1B #Escape
-  call put_char 
+  call put_char
  
   addi a0, x0, 'c' #Reset terminal DOES HAVE SIDE EFFECTS FIX LATER
   call put_char
+  
+  lw ra, 0(sp)
+  addi sp, sp, 4
+  
   ret
 
 
