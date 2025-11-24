@@ -1,4 +1,5 @@
- 
+ .text 
+
   lui sp, 0x4 # Initialize sp
 
   sw x0, 4(x0)   #initialize IO
@@ -8,6 +9,41 @@
 
   addi t2, x0, 0x200
   sw t2, 0x100(x0) #Init input buffer pointer
+
+init_ascii_map:
+  lui t0, 0x1
+  addi t3, x0, 0x30 #'0'
+  sb t3, 0(t0)
+  addi t3, x0, 0x31 #'1'
+  sb t3, 1(t0)
+  addi t3, x0, 0x32 #'2'
+  sb t3, 2(t0)
+  addi t3, x0, 0x33 #'3'
+  sb t3, 3(t0)
+  addi t3, x0, 0x34
+  sb t3, 4(t0)
+  addi t3, x0, 0x35
+  sb t3, 5(t0)
+  addi t3, x0, 0x36
+  sb t3, 6(t0)
+  addi t3, x0, 0x37
+  sb t3, 7(t0)
+  addi t3, x0, 0x38
+  sb t3, 8(t0)
+  addi t3, x0, 0x39
+  sb t3, 9(t0)
+  addi t3, x0, 0x41 #'A'
+  sb t3, 10(t0)
+  addi t3, x0, 0x42
+  sb t3, 11(t0)
+  addi t3, x0, 0x43
+  sb t3, 12(t0)
+  addi t3, x0, 0x44
+  sb t3, 13(t0)
+  addi t3, x0, 0x45
+  sb t3, 14(t0)
+  addi t3, x0, 0x46
+  sb t3, 15(t0)
 
 welcome:
   
@@ -49,14 +85,8 @@ welcome:
   addi a0, x0, '1'
   call put_char
 
-  addi a0, x0, 0x0D #carriage return
-  call put_char
-
-  addi a0, x0, 0x0A #line feed
-  call put_char
-
-  addi a0, x0, 0x0A #another one
-  call put_char
+  call new_line
+  call new_line
 
   addi a0, x0, ' '
   call put_char
@@ -67,7 +97,6 @@ welcome:
   addi a0, x0, ' '
   call put_char
    
-
   
 polling_loop:
   lw t2, 12(x0) #if is_recv()
@@ -118,9 +147,187 @@ parse_command:
   
   beq s3, t0, clear
 
+  addi t0, x0, 'r'
+  slli t0, t0, 8
+  addi t0, t0, 'e'
+  slli t0, t0, 8
+  addi t0, t0, 'g'
+  slli t0, t0, 8
+  addi t0, t0, 'm'
+
+  beq s3, t0, reg_monitor
+
   j default
 
   clear:
+    #call clear_screen
+    j end_case
+
+  reg_monitor:
+   
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char    
+    addi a0, x0, '0'
+    call put_char    
+    addi a0, x0, '0'
+    call put_char    
+    addi a0, x0, '0'
+    call put_char    
+    addi a0, x0, '0'
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char   
+    
+    add t0, x0, x1
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x1
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x1
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+    
+    add t0, x0, x1
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+   
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char   
+    
+    add t0, x0, x2
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x2
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x2
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+    
+    add t0, x0, x2
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+ 
+    addi a0, x0, ' '
+    call put_char   
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '3'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char   
+    
+    add t0, x0, x3
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x3
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x3
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+    
+    add t0, x0, x3
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+   
+    #call new_line
+    #call new_line
+
+
+    j end_case
 
   default:
     addi a0, x0, 'I' #line feed
@@ -149,11 +356,6 @@ parse_command:
 
     addi a0, x0, 0x0A #line feed
     call put_char
-
-
-
-
-
    
 
   end_case:
@@ -165,15 +367,14 @@ put_char: #Assumes printing char is in a0
   sw t0, 8(x0)
   sw x0, 8(x0)
 
-# testing no delay 
   #delay a bunch
-  #addi t0, x0, 0xFF
-  #slli t0, t0, 8
-  #addi t0, t0, 0xFF  
+  addi t0, x0, 0xFF
+  slli t0, t0, 8
+  addi t0, t0, 0xFF  
   
-  #subtract_loop:
-   # addi t0, t0, -1
-   # bne t0, x0, subtract_loop
+  subtract_loop:
+    addi t0, t0, -1
+    bne t0, x0, subtract_loop
   ret 
 
 clear_screen:
@@ -192,5 +393,10 @@ clear_screen:
   
   ret
 
+new_line:
+  addi a0, x0, 0x0D #carriage return
+  call put_char
 
-
+  addi a0, x0, 0x0A #line feed
+  call put_char
+  ret
