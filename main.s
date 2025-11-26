@@ -51,19 +51,19 @@ welcome:
 
   addi a0, x0, ' '
   call put_char
-  
+
   addi a0, x0, 'S'
   call put_char
-  
+
   addi a0, x0, 'p'
   call put_char
-  
+
   addi a0, x0, 'u'
   call put_char
-  
+
   addi a0, x0, 'r'
   call put_char
-  
+
   addi a0, x0, ' ' 
   call put_char
 
@@ -137,34 +137,50 @@ parse_command:
   lw s3, 0x200(x0) # grab command
   
   # clr
-  addi t0, x0, 'c'
-  slli t0, t0, 8
-  addi t0, t0, 'l'
+  addi t0, x0, 's'
   slli t0, t0, 8
   addi t0, t0, 'r'
   slli t0, t0, 8
-  addi t0, t0, 's'
+  addi t0, t0, 'l'
+  slli t0, t0, 8
+  addi t0, t0, 'c'
   
   beq s3, t0, clear
 
-  addi t0, x0, 'r'
-  slli t0, t0, 8
-  addi t0, t0, 'e'
+  addi t0, x0, 'm'
   slli t0, t0, 8
   addi t0, t0, 'g'
   slli t0, t0, 8
-  addi t0, t0, 'm'
+  addi t0, t0, 'e'
+  slli t0, t0, 8
+  addi t0, t0, 'r'
 
   beq s3, t0, reg_monitor
+
+  srli s3, s3, 8
+
+  addi t0, x0, 'b'
+  slli t0, t0, 8
+  addi t0, t0, 'i'
+  slli t0, t0, 8
+  addi t0, t0, 'f'
+
+  beq s3, t0, fib
 
   j default
 
   clear:
-    #call clear_screen
+    call clear_screen
     j end_case
+
+  fib:
+
+    j end_case 
 
   reg_monitor:
    
+    addi a0, x0, ' '
+    call put_char
     addi a0, x0, 'x'
     call put_char
     addi a0, x0, '0'
@@ -234,6 +250,8 @@ parse_command:
     call new_line
     call new_line
 
+    addi a0, x0, ' '
+    call put_char
     addi a0, x0, 'x'
     call put_char
     addi a0, x0, '2'
@@ -323,43 +341,1381 @@ parse_command:
     lw a0, 0(a0)
     call put_char
    
-    #call new_line
-    #call new_line
+    call new_line
+    call new_line
 
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '4'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char   
+    
+    add t0, x0, x4
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x4
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x4
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+    
+    add t0, x0, x4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+ 
+    addi a0, x0, ' '
+    call put_char   
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '5'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char   
+    
+    add t0, x0, x5
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x5
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x5
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+    
+    add t0, x0, x5
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+   
+    call new_line
+    call new_line
+
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '6'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x6
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x6
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x6
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x6
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '7'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x7
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x7
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x7
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x7
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '8'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x8
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x8
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x8
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '9'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x9
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x9
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x9
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x9
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x10
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x10
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x10
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x10
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x11
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x11
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x11
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x11
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x12
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x12
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x12
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x12
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '3'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x13
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x13
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x13
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x13
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '4'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x14
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x14
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x14
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x14
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '5'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x15
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x15
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x15
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x15
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '6'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x16
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x16
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x16
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x16
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '7'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x17
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x17
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x17
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x17
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '8'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x18
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x18
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x18
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x18
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, '9'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x19
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x19
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x19
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x19
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x20
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x20
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x20
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x20
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x21
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x21
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x21
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x21
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x22
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x22
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x22
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x22
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '3'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x23
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x23
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x23
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x23
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '4'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x24
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x24
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x24
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x24
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '5'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x25
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x25
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x25
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x25
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '6'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x26
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x26
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x26
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x26
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '7'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x27
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x27
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x27
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x27
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '8'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x28
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x28
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x28
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x28
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '2'
+    call put_char
+    addi a0, x0, '9'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x29
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x29
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x29
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x29
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '3'
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x30
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x30
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x30
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x30
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    addi a0, x0, ' '
+    call put_char
+
+    addi a0, x0, 'x'
+    call put_char
+    addi a0, x0, '3'
+    call put_char
+    addi a0, x0, '1'
+    call put_char
+    addi a0, x0, ':'
+    call put_char
+    addi a0, x0, ' '
+    call put_char
+    addi a0, x0, '0'
+    call put_char
+    addi a0, x0, 'x'
+    call put_char
+
+    add t0, x0, x31
+    srli t0, t0, 12
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x31
+    srli t0, t0, 8
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x31
+    srli t0, t0, 4
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    add t0, x0, x31
+    andi t0, t0, 0xFF
+    lui a0, 0x1
+    add a0, a0, t0
+    lw a0, 0(a0)
+    call put_char
+
+    call new_line
+    call new_line
 
     j end_case
 
   default:
-    addi a0, x0, 'I' #line feed
+    addi a0, x0, 'I' 
     call put_char
     
-    addi a0, x0, 'n' #line feed
+    addi a0, x0, 'n' 
     call put_char
 
-    addi a0, x0, 'v' #line feed
+    addi a0, x0, 'v' 
     call put_char
 
-    addi a0, x0, 'a' #line feed
+    addi a0, x0, 'a' 
     call put_char
     
-    addi a0, x0, 'l' #line feed
+    addi a0, x0, 'l' 
     call put_char
 
-    addi a0, x0, 'i' #line feed
+    addi a0, x0, 'i' 
     call put_char
 
-    addi a0, x0, 'd' #line feed
+    addi a0, x0, 'd' 
     call put_char
 
-    addi a0, x0, 0x0D #line feed
+    addi a0, x0, 0x0D 
     call put_char
 
-    addi a0, x0, 0x0A #line feed
+    addi a0, x0, 0x0A 
     call put_char
    
 
   end_case:
     j parse_command_return
+
 
 put_char: #Assumes printing char is in a0
   sw a0, 4(x0)
@@ -378,7 +1734,6 @@ put_char: #Assumes printing char is in a0
   ret 
 
 clear_screen:
- 
   addi sp, sp, -4
   sw ra, 0(sp)
   
@@ -394,9 +1749,16 @@ clear_screen:
   ret
 
 new_line:
+  addi sp, sp, -4
+  sw ra, 0(sp)
+
   addi a0, x0, 0x0D #carriage return
   call put_char
 
   addi a0, x0, 0x0A #line feed
   call put_char
+
+  lw ra, 0(sp)
+  addi sp, sp, 4
+
   ret
