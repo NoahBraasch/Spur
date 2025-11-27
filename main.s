@@ -1,4 +1,9 @@
- .text 
+ # Spur V 0.0.1
+ # Author - Noah Braasch
+
+
+
+ .text
 
   lui sp, 0x4 # Initialize sp
 
@@ -174,6 +179,45 @@ parse_command:
     j end_case
 
   fib:
+  # Save registers
+    addi sp, sp, -4
+    sw a0, 0(sp)
+    addi sp, sp, -4
+    sw t0, 0(sp)
+    addi sp, sp, -4
+    sw t1, 0(sp)
+    addi sp, sp, -4
+    sw t2, 0(sp)
+    addi sp, sp, -4
+    sw t3, 0(sp)
+
+    addi t0, x0, 0
+    addi t1, x0, 1
+    addi t3, x0, 20  # Number of fib numbers
+
+    fib_loop:
+      add t2, t1, t0
+      add a0, t2, x0
+
+      call put_char
+      call new_line
+
+      add t0, t1, x0
+      add t1, t2, x0
+      addi t3, t3, -1
+      bne t3, x0, fib_loop
+
+
+    lw t3, 0(sp)     # Restore registers
+    addi sp, sp, 4
+    lw t2, 0(sp)
+    addi sp, sp, 4
+    lw t1, 0(sp)
+    addi sp, sp, 4
+    lw t0, 0(sp)
+    addi sp, sp, 4
+    lw a0, 0(sp)
+    addi sp, sp, 4
 
     j end_case 
 
