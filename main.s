@@ -52,6 +52,7 @@ init_ascii_map:
 
 welcome:
   
+  call new_line
   call clear_screen
 
   addi a0, x0, ' '
@@ -116,8 +117,13 @@ wait_loop:
   lb t0, 0(x0) #grab_rx
   lw s2, 0x100(x0) #Grab input buffer pointer
 
-  addi t3, x0, 0x0D
+  addi t3, x0, 0x0D #when enter is pressed, parse command
   beq t0, t3, parse_command  
+
+  addi t3, x0, 0x08     # when backspace is pressed, delete terminal chartacters and update buffer
+  beq t0, t3, backspace
+
+
 
 parse_command_return:  
   addi t1, x0, 1 # t1 gets mangled in parse_command
@@ -131,6 +137,20 @@ parse_command_return:
   sw t0, 4(x0) #mov rx to tx
   sw t1, 8(x0) #transmit high
   sw x0, 8(x0) #transmit low
+  j polling_loop
+
+backspace:
+
+  addi a0, x0, 0x08
+  call put_char
+  addi a0, x0, ' '
+  call put_char
+  addi a0, x0, 0x08
+
+  addi s2, s2, -1 #decrement pointer
+  sb x0, 0(s2) # clear input buffer entry
+  sw s2, 0x100(x0) #store pointer
+
   j polling_loop
 
 parse_command:
@@ -161,8 +181,6 @@ parse_command:
   addi t0, t0, 'r'
 
   beq s3, t0, reg_monitor
-
-  srli s3, s3, 8
 
   addi t0, x0, 'b'
   slli t0, t0, 8
