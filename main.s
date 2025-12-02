@@ -1780,10 +1780,20 @@ parse_command:
 
 
 put_char: #Assumes printing char is in a0
-  sw a0, 4(x0)
-  ori t0, x0, 1
-  sw t0, 8(x0)
-  sw x0, 8(x0)
+	sw a0, 4(x0)
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+	ori t0, x0, 1
+	sw t0, 8(x0)
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+    add x0, x0, x0
+	sw x0, 8(x0)
 
   #delay a bunch
   addi t0, x0, 0xFF
